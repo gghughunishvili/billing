@@ -8,6 +8,10 @@ use Invoicer\App\Domain\Entities\Order;
 class InvoiceFactory
 {
     public function createFromOrder(Order $order) {
-        return new Invoice();
+        $invoice = new Invoice();
+        $invoice->setOrder($order);
+        $invoice->setInvoiceDate(new \DateTime());
+        $invoice->setTotal($order->getTotal());
+        return $invoice;
     }
 }
