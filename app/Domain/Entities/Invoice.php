@@ -2,6 +2,8 @@
 
 namespace Invoicer\App\Domain\Entities;
 
+use DateTime;
+
 class Invoice extends AbstractEntity
 {
     protected $order;
@@ -36,10 +38,10 @@ class Invoice extends AbstractEntity
     }
 
     /**
-     * @param mixed $invoiceDate
+     * @param DateTime $invoiceDate
      * @return Invoice
      */
-    public function setInvoiceDate($invoiceDate)
+    public function setInvoiceDate(DateTime $invoiceDate)
     {
         $this->invoiceDate = $invoiceDate;
         return $this;
