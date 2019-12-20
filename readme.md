@@ -8,8 +8,12 @@ Added a couple of best practices for naming conventions.
 - PHP 7.3 
 - Composer
 
+### Dependencies
+- Peridot-PHP (BDD)
+
 ### Installing
 1. Run `composer dump-autoload`
+2. Run `composer install`
 
 ## Authors
 
