@@ -1,5 +1,8 @@
 <?php
 
+use Invoicer\App\Domain\Entities\Invoice;
+use Invoicer\App\Domain\Entities\Order;
+use Invoicer\App\Domain\Factories\InvoiceFactory;
 use Invoicer\App\Domain\Repositories\InvoiceRepositoryInterface;
 use Invoicer\App\Domain\Services\InvoiceService;
 
@@ -8,7 +11,13 @@ describe('InvoicingService', function () {
         beforeEach(function () {
             $interface = InvoiceRepositoryInterface::class;
             $this->em = $this->getProphet()->prophesize($interface);
-            $this->repository = new InvoiceService($this->em->reveal());
+            $this->factory = $this->getProphet()
+                ->prophesize(InvoiceFactory::class);
+            $this->repository = new InvoiceService(
+                $this->em->reveal(),
+                $this->factory->reveal()
+
+            );
         });
 
         afterEach(function () {
@@ -17,9 +26,25 @@ describe('InvoicingService', function () {
 
         it('should query the repository for uninvoiced Orders', function () {
             $this->em->getUninvoicedOrders()->shouldBeCalled();
-            $this->repository->generateInvoices();
+            $service = new InvoiceService(
+                $this->em->reveal(),
+                $this->factory->reveal()
+            );
+            $service->generateInvoices();
         });
 
-        it('should return an Invoice for each uninvoiced Order');
+        it('should return an Invoice for each uninvoiced Order', function () {
+            $orders = [(new Order())->setTotal(400)];
+            $invoices = [(new Invoice())->setTotal(400)];
+            $this->em->getUninvoicedOrders()->willReturn($orders);
+            $this->factory->createFromOrder($orders[0])->willReturn($invoices[0]);
+            $service = new InvoiceService(
+                $this->em->reveal(),
+                $this->factory->reveal()
+            );
+            $results = $service->generateInvoices();
+            expect($results)->to->be->an('array');
+            expect($results)->to->have->length(count($orders));
+        });
     });
 });
