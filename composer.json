@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "Billing\\Invoicer\\": ["app/"]
+            "Invoicer\\App\\": ["app/"]
         }
     }
 }
