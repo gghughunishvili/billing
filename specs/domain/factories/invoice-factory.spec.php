@@ -34,7 +34,9 @@ describe('InvoiceFactory', function () {
             $order = new Order();
             $factory = new InvoiceFactory();
             $invoice = $factory->createFromOrder($order);
-            $timeDiff = (new \DateTime())->getTimeStamp() - $invoice->getInvoiceDate()->getTimeStamp();
+            $invoiceDate = $invoice->getInvoiceDate();
+            expect($invoiceDate)->instanceof(DateTime::class);
+            $timeDiff = (new DateTime())->getTimeStamp() - $invoiceDate->getTimeStamp();
             // 1 second difference is allowed due to some execution time
             expect($timeDiff)->to->be->within(0, 1);
         });
