@@ -1,16 +1,23 @@
 <?php
 
+use Invoicer\App\Domain\Repositories\InvoiceRepositoryInterface;
+use Invoicer\App\Domain\Services\InvoiceService;
+
 describe('InvoicingService', function () {
     describe('->generateInvoices()', function () {
         beforeEach(function () {
-            $repository = Invoicer\App\Domain\Repository\OrderRepositoryInterface::class;
-            $this->repository = $this->getProphet()->prophesize($repository);
+            $interface = InvoiceRepositoryInterface::class;
+            $this->em = $this->getProphet()->prophesize($interface);
+            $this->repository = new InvoiceService($this->em->reveal());
+        });
+
+        afterEach(function () {
+            $this->getProphet()->checkPredictions();
         });
 
         it('should query the repository for uninvoiced Orders', function () {
-            $this->repository->getUninvoicedOrders()->shouldBeCalled();
-            $service = new InvoicingService($this->repository->reveal());
-            $service->generateInvoices();
+            $this->em->getUninvoicedOrders()->shouldBeCalled();
+            $this->repository->generateInvoices();
         });
 
         it('should return an Invoice for each uninvoiced Order');
