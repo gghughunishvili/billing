@@ -18,6 +18,7 @@
     },
     "require-dev": {
         "peridot-php/peridot": "^1.19",
-        "peridot-php/leo": "^1.6"
+        "peridot-php/leo": "^1.6",
+        "peridot-php/peridot-prophecy-plugin": "^1.1"
     }
 }
