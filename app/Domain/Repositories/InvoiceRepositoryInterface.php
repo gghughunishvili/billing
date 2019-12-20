@@ -2,7 +2,7 @@
 
 namespace Invoicer\App\Domain\Repositories;
 
-interface InvoiceInterface extends RepositoryInterface
+interface InvoiceRepositoryInterface extends RepositoryInterface
 {
     /**
      * @return mixed
