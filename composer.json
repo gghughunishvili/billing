@@ -1,4 +1,16 @@
 {
+    "name": "gghughunishvili/billing",
+    "type": "project",
+    "description": "Sample project with clean architecture and best practices",
+
+    "keywords": [
+        "clean-architecture",
+        "php",
+        "best-practices"
+    ],
+
+    "license": "MIT",
+
     "autoload": {
         "psr-4": {
             "Invoicer\\App\\": ["app/"]
